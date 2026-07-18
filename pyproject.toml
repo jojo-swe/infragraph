@@ -1,18 +1,24 @@
 [build-system]
-requires=["hatchling"]
-build-backend="hatchling.build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
-name="infragraph"
-version="0.1.0"
-description="Build infrastructure dependency graphs from inventory data."
-readme="README.md"
-requires-python=">=3.11"
-license={text="Apache-2.0"}
-authors=[{name="John Johansson"}]
+name = "infragraph"
+version = "0.2.0"
+description = "Build infrastructure dependency graphs and calculate failure blast radius."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+authors = [{name = "John Johansson"}]
+
+[project.scripts]
+infragraph = "infragraph.cli:main"
 
 [project.optional-dependencies]
-dev=["pytest>=8","ruff>=0.5"]
+dev = ["pytest>=8", "ruff>=0.5"]
 
 [tool.hatch.build.targets.wheel]
-packages=["src/infragraph"]
+packages = ["src/infragraph"]
+
+[tool.ruff]
+line-length = 100
