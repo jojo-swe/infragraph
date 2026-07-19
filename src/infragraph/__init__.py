@@ -1,3 +1,5 @@
 """InfraGraph public API."""
-from .core import build_graph
-__all__=["build_graph"]
+
+from .core import Dependency, ImpactReport, InfrastructureGraph, Node, build_graph
+
+__all__ = ["Dependency", "ImpactReport", "InfrastructureGraph", "Node", "build_graph"]

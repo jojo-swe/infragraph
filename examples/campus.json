@@ -1,0 +1,18 @@
+{
+  "nodes": [
+    {"id": "internet", "kind": "external", "criticality": "high"},
+    {"id": "edge-fw", "kind": "firewall", "criticality": "high"},
+    {"id": "core-sw", "kind": "switch", "criticality": "high"},
+    {"id": "dns", "kind": "service", "criticality": "critical"},
+    {"id": "auth", "kind": "service", "criticality": "critical"},
+    {"id": "portal", "kind": "application", "criticality": "critical"}
+  ],
+  "dependencies": [
+    {"source": "edge-fw", "target": "internet", "kind": "uplink"},
+    {"source": "core-sw", "target": "edge-fw", "kind": "default_path"},
+    {"source": "dns", "target": "core-sw", "kind": "network"},
+    {"source": "auth", "target": "dns", "kind": "name_resolution"},
+    {"source": "portal", "target": "auth", "kind": "authentication"},
+    {"source": "portal", "target": "dns", "kind": "name_resolution"}
+  ]
+}
