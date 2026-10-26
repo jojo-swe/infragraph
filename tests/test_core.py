@@ -1,6 +1,5 @@
 from infragraph import build_graph
 
-
 PAYLOAD = {
     "nodes": [
         {"id": "core", "kind": "switch"},

@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from collections import defaultdict, deque
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass, field
-from typing import Iterable
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,7 +49,7 @@ class InfrastructureGraph:
             self._requirements[edge.source].append(edge.target)
 
     @classmethod
-    def from_dict(cls, payload: dict[str, object]) -> "InfrastructureGraph":
+    def from_dict(cls, payload: dict[str, object]) -> InfrastructureGraph:
         nodes = [Node(**item) for item in payload.get("nodes", [])]  # type: ignore[arg-type]
         edges = [Dependency(**item) for item in payload.get("dependencies", [])]  # type: ignore[arg-type]
         return cls(nodes, edges)
