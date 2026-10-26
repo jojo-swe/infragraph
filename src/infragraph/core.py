@@ -114,11 +114,11 @@ class InfrastructureGraph:
         for node in sorted(self.nodes.values(), key=lambda item: item.id):
             label = (node.label or node.id).replace('"', "'")
             lines.append(f'    {self._safe_id(node.id)}["{label}<br/>{node.kind}"]')
-        for edge in sorted(self.dependencies, key=lambda item: (item.source, item.target, item.kind)):
+        edges = sorted(self.dependencies, key=lambda item: (item.source, item.target, item.kind))
+        for edge in edges:
             arrow = "-->" if edge.required else "-.->"
-            lines.append(
-                f"    {self._safe_id(edge.source)} {arrow}|{edge.kind}| {self._safe_id(edge.target)}"
-            )
+            source, target = self._safe_id(edge.source), self._safe_id(edge.target)
+            lines.append(f"    {source} {arrow}|{edge.kind}| {target}")
         return "\n".join(lines) + "\n"
 
     @staticmethod

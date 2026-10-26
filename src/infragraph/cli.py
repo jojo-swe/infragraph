@@ -11,7 +11,9 @@ from .core import build_graph
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="infragraph", description="Analyze infrastructure dependencies.")
+    parser = argparse.ArgumentParser(
+        prog="infragraph", description="Analyze infrastructure dependencies."
+    )
     parser.add_argument("inventory", type=Path, help="JSON inventory file")
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -40,7 +42,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(json.dumps(report.to_dict(), indent=2, sort_keys=True))
             else:
                 print(f"Failed: {', '.join(report.failed_nodes)}")
-                print(f"Impacted ({len(report.impacted_nodes)}): {', '.join(report.impacted_nodes) or 'none'}")
+                impacted = ", ".join(report.impacted_nodes) or "none"
+                print(f"Impacted ({len(report.impacted_nodes)}): {impacted}")
                 print(f"Critical impacts: {', '.join(report.critical_impacts) or 'none'}")
                 for node in report.impacted_nodes:
                     print(f"  {node}: {' -> '.join(report.paths[node])}")
