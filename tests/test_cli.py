@@ -39,3 +39,10 @@ def test_mermaid_writes_output_file(tmp_path) -> None:
     output = tmp_path / "topology.mmd"
     assert main([CAMPUS, "mermaid", "-o", str(output)]) == 0
     assert output.read_text(encoding="utf-8").startswith("flowchart LR\n")
+
+
+def test_readme_impact_example_matches_real_output(capsys) -> None:
+    readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(encoding="utf-8")
+    expected = readme.split("Example output:\n\n```text\n", 1)[1].split("```", 1)[0]
+    main([CAMPUS, "impact", "core-sw"])
+    assert capsys.readouterr().out == expected
