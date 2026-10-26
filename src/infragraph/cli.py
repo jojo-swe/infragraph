@@ -61,7 +61,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(output, end="")
         return 0
-    except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
+    except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
         print(f"infragraph: {exc}", file=sys.stderr)
         return 2
 

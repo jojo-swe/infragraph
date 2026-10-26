@@ -70,7 +70,7 @@ class InfrastructureGraph:
         failed_nodes = [failed] if isinstance(failed, str) else list(failed)
         unknown = sorted(set(failed_nodes) - self.nodes.keys())
         if unknown:
-            raise KeyError(f"Unknown node(s): {', '.join(unknown)}")
+            raise ValueError(f"Unknown node(s): {', '.join(unknown)}")
 
         queue = deque(failed_nodes)
         paths: dict[str, list[str]] = {node: [node] for node in failed_nodes}
@@ -98,7 +98,7 @@ class InfrastructureGraph:
 
     def dependency_chain(self, node_id: str) -> list[str]:
         if node_id not in self.nodes:
-            raise KeyError(f"Unknown node: {node_id}")
+            raise ValueError(f"Unknown node: {node_id}")
         result: list[str] = []
         queue = deque(sorted(self._requirements.get(node_id, [])))
         seen: set[str] = set()
