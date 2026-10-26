@@ -45,7 +45,9 @@ class InfrastructureGraph:
         self._dependents: dict[str, list[str]] = defaultdict(list)
         self._requirements: dict[str, list[str]] = defaultdict(list)
         for edge in self.dependencies:
-            self._dependents[edge.target].append(edge.source)
+            # Optional edges stay in the chain but do not propagate failure.
+            if edge.required:
+                self._dependents[edge.target].append(edge.source)
             self._requirements[edge.source].append(edge.target)
 
     @classmethod

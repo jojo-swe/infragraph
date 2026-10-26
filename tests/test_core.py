@@ -34,3 +34,17 @@ def test_mermaid_is_deterministic() -> None:
     output = build_graph(PAYLOAD).to_mermaid()
     assert output.startswith("flowchart LR\n")
     assert "n_app -->|resolution| n_dns" in output
+
+
+def test_optional_dependency_does_not_propagate_failure() -> None:
+    graph = build_graph(
+        {
+            "nodes": [{"id": "app"}, {"id": "cache"}, {"id": "db"}],
+            "dependencies": [
+                {"source": "app", "target": "cache", "required": False},
+                {"source": "cache", "target": "db"},
+            ],
+        }
+    )
+    assert graph.blast_radius("db").impacted_nodes == ["cache"]
+    assert graph.dependency_chain("app") == ["cache", "db"]
