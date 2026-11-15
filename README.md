@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/assets/logo.svg" alt="infragraph logo" width="128"></p>
+
 # InfraGraph
 
 Build infrastructure dependency graphs, calculate failure blast radius, and find single points of failure before an outage does.
